@@ -3,7 +3,7 @@ import { saveConfig } from "@/utils/config"
 
 export default defineConfig({
   info: {
-    id: "@karinjs/karin-plugin-lux",   
+    id: "karin-plugin-lux",   
     name: "杂七杂八的插件",
     author: {
       name: 'Xiaotan',

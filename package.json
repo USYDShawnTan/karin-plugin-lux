@@ -1,5 +1,5 @@
 {
-  "name": "@karinjs/karin-plugin-lux",
+  "name": "karin-plugin-lux",
   "version": "1.0.2",
   "author": "Xiaotan",
   "type": "module",
