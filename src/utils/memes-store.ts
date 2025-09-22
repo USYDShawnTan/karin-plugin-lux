@@ -51,6 +51,11 @@ export class MemesStore {
     fs.writeFileSync(this.infosPath, JSON.stringify(data, null, 2), 'utf8')
   }
 
+  saveKeyMap (data: Record<string, string>) {
+    this.ensureDirs()
+    fs.writeFileSync(this.keyMapPath, JSON.stringify(data, null, 2), 'utf8')
+  }
+
   loadTriggers (): Record<string, number> {
     try {
       if (!fs.existsSync(this.triggersPath)) return {}

@@ -347,7 +347,7 @@ const init = async () => {
 
     // 保存到本地
     store.saveInfos(infos as any)
-
+    store.saveKeyMap(keyMap)
 
     logger.info(`获取表情包数据完成，支持 ${Object.keys(keyMap).length} 个关键词`)
   }
