@@ -1,5 +1,7 @@
 import { defineConfig, components } from "node-karin"
 import { saveConfig } from "@/utils/config"
+import { config } from "@/utils/config"
+
 
 export default defineConfig({
   info: {
@@ -14,30 +16,36 @@ export default defineConfig({
   },
 
   components: () => [
+    components.divider.create('divider-key', {
+      description: "戳一戳配置"
+    }),
+    components.input.string("masterId", {
+      label: "主人ID",
+      placeholder: "请输入主人ID",
+      defaultValue: config().masterId,
+      isRequired: true
+    }),
+    components.divider.create('divider-key', {
+      description: "API 配置"
+    }),
     components.input.string("yiyanApi", {
       label: "一言 API 地址",
       placeholder: "请输入 URL",
-      defaultValue: "https://v1.hitokoto.cn/",
+      defaultValue: config().yiyanApi,
       isRequired: true
     }),
     components.input.string("apiBaseUrl", {
       label: "通用 API 基础地址",
       placeholder: "请输入 API 基础地址",
-      defaultValue: "",
+      defaultValue: config().apiBaseUrl,
       isRequired: true
     }),
     components.input.string("emojiApiBaseUrl", {
       label: "Emoji API 基础地址",
       placeholder: "请输入 Emoji API 基础地址",
-      defaultValue: "",
+      defaultValue: config().emojiApiBaseUrl,
       isRequired: true
     }),
-    components.input.string("masterId", {
-      label: "主人ID",
-      placeholder: "请输入主人ID",
-      defaultValue: "",
-      isRequired: true
-    })
   ],
 
   save: (cfg: any) => {
