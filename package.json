@@ -17,7 +17,7 @@
     "build": "tsup",
     "dev": "cross-env EBV_FILE=\"development.env\" node --import tsx src/app.ts",
     "pub": "npm publish --access public",
-    "git": "npm version patch && git push --follow-tags"
+    "git": "npm version patch && git push --follow-tags && git push origin main"
   },
   "main": "lib/index.js",
   "devDependencies": {

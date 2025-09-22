@@ -7,7 +7,7 @@ import path from 'node:path'
  * 帮助页面
  * 触发指令: #帮助、#help、#功能列表
  */
-export const help = karin.command(/^#?(帮助|help|功能列表)$/, async (e) => {
+export const help = karin.command(/^#?(帮助|help|功能列表|功能|插件列表)$/, async (e) => {
   try {
     // 获取配置中的功能列表
     const cfg = config()
