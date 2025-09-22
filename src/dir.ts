@@ -54,6 +54,16 @@ export const dir = {
     return path.join(this.karinPath, "resources")
   },
 
+  /** 插件数据目录（运行时路径：@karinjs/karin-plugin-xxx/data） */
+  get dataDir () {
+    return path.join(this.karinPath, "data")
+  },
+
+  /** memes 专用数据目录（运行时路径：@karinjs/karin-plugin-xxx/data/memes） */
+  get memesDataDir () {
+    return path.join(this.dataDir, "memes")
+  },
+
   /**
    * 插件资源目录（增强版：开发 / 生产自动兼容）
    * - 开发时：使用源码目录的 resources

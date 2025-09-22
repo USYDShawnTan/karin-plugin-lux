@@ -42,7 +42,7 @@ export const help = karin.command(/^#?(帮助|help|功能列表)$/, async (e) =>
       data: {
         backgroundImage: backgroundImage,
         pluginName: 'karin-plugin-lux',
-        pluginInfo: '杂七杂八的小功能合集 v1.0.5',
+        pluginInfo: '杂七杂八的小功能合集',
         pluResPath: process.cwd(),
         helpListHTML: helpListHTML, // 传递预生成的HTML
       },
