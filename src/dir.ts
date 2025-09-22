@@ -25,32 +25,32 @@ export const dir = {
   pkg,
 
   /** 插件版本号 */
-  get version() {
+  get version () {
     return pkg.version
   },
 
   /** 插件名称（package.json 的 name） */
-  get name() {
+  get name () {
     return pkg.name
   },
 
   /** 插件默认配置目录（源码目录下） */
-  get defConfigDir() {
+  get defConfigDir () {
     return path.join(pluginDir, "config")
   },
 
   /** 在 `@karinjs` 下的目录路径 */
-  get karinPath() {
+  get karinPath () {
     return path.join(karinPathBase, pluginName)
   },
 
   /** 插件配置目录（运行时路径） */
-  get ConfigDir() {
+  get ConfigDir () {
     return path.join(this.karinPath, "config")
   },
 
   /** 插件资源目录（运行时路径：@karinjs/karin-plugin-xxx/resources） */
-  get defResourcesDir() {
+  get defResourcesDir () {
     return path.join(this.karinPath, "resources")
   },
 
@@ -59,13 +59,18 @@ export const dir = {
    * - 开发时：使用源码目录的 resources
    * - 生产时：使用 @karinjs 下的 resources
    */
-  get resourcesDir() {
+  get resourcesDir () {
     const devPath = path.join(this.pluginDir, "resources")
-    // 优先用源码目录（开发时）
-    if (process.env.NODE_ENV !== "production" && fs.existsSync(devPath)) {
+    const prodPath = this.defResourcesDir
+
+    // 检查是否在开发环境（源码目录存在且包含resources文件夹）
+    const isDev = fs.existsSync(devPath) && fs.existsSync(path.join(devPath, "template"))
+
+    if (isDev) {
       return devPath
     }
-    // fallback 到运行时目录
-    return this.defResourcesDir
+
+    // 生产环境或开发环境resources不存在时，使用运行时目录
+    return prodPath
   }
 }
