@@ -31,6 +31,12 @@ export default defineConfig({
       placeholder: "请输入 Emoji API 基础地址",
       defaultValue: "",
       isRequired: true
+    }),
+    components.input.string("masterId", {
+      label: "主人ID",
+      placeholder: "请输入主人ID",
+      defaultValue: "",
+      isRequired: true
     })
   ],
 

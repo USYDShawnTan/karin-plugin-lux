@@ -2,6 +2,7 @@
   "yiyanApi": "https://v1.hitokoto.cn/",
   "apiBaseUrl": "",
   "emojiApiBaseUrl": "",
+  "masterId": "",
   "helpList": [
     {
       "name": "今日运势",
@@ -20,12 +21,8 @@
       "content": "发送emoji自动生成图片，支持单个emoji和两个emoji合成"
     },
     {
-      "name": "测试渲染",
-      "content": "测试HTML渲染功能，触发命令：#测试渲染"
-    },
-    {
-      "name": "网页渲染",
-      "content": "渲染指定网页为图片，触发命令：#渲染 [URL]"
+      "name": "meme表情包",
+      "content": "meme表情包功能，#meme帮助可以查看"
     },
     {
       "name": "帮助页面",

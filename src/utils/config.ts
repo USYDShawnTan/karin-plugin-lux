@@ -21,6 +21,8 @@ export interface Config {
     name: string
     content: string
   }>
+  /** 主人ID */
+  masterId: string
 }
 
 /**
