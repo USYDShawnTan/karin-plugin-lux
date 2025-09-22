@@ -1,3 +1,35 @@
 {
-  "yiyanApi": "https://v1.hitokoto.cn/"
+  "yiyanApi": "https://v1.hitokoto.cn/",
+  "apiBaseUrl": "",
+  "emojiApiBaseUrl": "",
+  "helpList": [
+    {
+      "name": "今日运势",
+      "content": "获取今日运势信息，包含运势总结、幸运指数、签文和解签"
+    },
+    {
+      "name": "随机一言",
+      "content": "获取随机励志语句，包含出处和作者信息"
+    },
+    {
+      "name": "随机图片",
+      "content": "获取随机图片，触发命令：#龙 或 #long"
+    },
+    {
+      "name": "emoji处理",
+      "content": "发送emoji自动生成图片，支持单个emoji和两个emoji合成"
+    },
+    {
+      "name": "测试渲染",
+      "content": "测试HTML渲染功能，触发命令：#测试渲染"
+    },
+    {
+      "name": "网页渲染",
+      "content": "渲染指定网页为图片，触发命令：#渲染 [URL]"
+    },
+    {
+      "name": "帮助页面",
+      "content": "显示插件功能列表，触发命令：#帮助 或 #help"
+    }
+  ]
 }

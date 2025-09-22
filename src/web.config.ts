@@ -3,7 +3,7 @@ import { saveConfig } from "@/utils/config"
 
 export default defineConfig({
   info: {
-    id: "karin-plugin-lux",   
+    id: "karin-plugin-lux",
     name: "杂七杂八的插件",
     author: {
       name: 'Xiaotan',
@@ -19,11 +19,23 @@ export default defineConfig({
       placeholder: "请输入 URL",
       defaultValue: "https://v1.hitokoto.cn/",
       isRequired: true
+    }),
+    components.input.string("apiBaseUrl", {
+      label: "通用 API 基础地址",
+      placeholder: "请输入 API 基础地址",
+      defaultValue: "",
+      isRequired: true
+    }),
+    components.input.string("emojiApiBaseUrl", {
+      label: "Emoji API 基础地址",
+      placeholder: "请输入 Emoji API 基础地址",
+      defaultValue: "",
+      isRequired: true
     })
   ],
 
   save: (cfg: any) => {
-    saveConfig(cfg)   
+    saveConfig(cfg)
     return { success: true, message: "配置保存成功" }
   }
 })

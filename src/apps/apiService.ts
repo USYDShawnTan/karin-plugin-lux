@@ -1,5 +1,6 @@
 import { karin } from 'node-karin'
-import { getTodayFortune, getHitokoto, getRandomImage } from '../utils/api'
+import { getTodayFortune, getHitokoto, getRandomLongImage, getSingleEmojiData, getComboEmojiData } from '../utils/api'
+import emojiRegex from 'emoji-regex'
 
 /**
  * 获取今日运势
@@ -75,7 +76,7 @@ export const randomImage = karin.command(/^#*(龙|long)$/, async (e) => {
   try {
     await e.reply('nmsl...')
 
-    const data = await getRandomImage()
+    const data = await getRandomLongImage()
 
     // 处理图片响应
     const imageUrl = data.image_url
@@ -95,4 +96,40 @@ export const randomImage = karin.command(/^#*(龙|long)$/, async (e) => {
     return false
   }
 }, { name: '随机图片' })
+
+/**
+ * Emoji处理 - 检测消息中的emoji并自动发图
+ */
+export const emojiHandler = karin.command(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/u, async (e) => {
+  try {
+    const emojis = e.msg.match(emojiRegex())
+
+    if (!emojis || emojis.length === 0) return false
+
+    let imageUrl: string | null = null
+
+    if (emojis.length === 1) {
+      // 单个emoji - 获取GIF
+      imageUrl = await getSingleEmojiData(emojis[0])
+    } else {
+      // 两个emoji合成 (取前两个)
+      imageUrl = await getComboEmojiData(emojis[0], emojis[1])
+
+      // 如果合成失败，尝试发送第一个emoji
+      if (!imageUrl) {
+        imageUrl = await getSingleEmojiData(emojis[0])
+      }
+    }
+
+    if (imageUrl) {
+      await e.reply([{ type: 'image', file: imageUrl }])
+      return true
+    } else {
+      return false
+    }
+  } catch (error) {
+    console.error('emoji处理失败:', error)
+    return false
+  }
+}, { name: 'emoji处理' })
 

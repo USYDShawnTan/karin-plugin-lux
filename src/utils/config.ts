@@ -12,12 +12,21 @@ import { dir } from "@/dir"
 export interface Config {
   /** 一言API */
   yiyanApi: string
+  /** API基础地址 */
+  apiBaseUrl: string
+  /** Emoji API基础地址 */
+  emojiApiBaseUrl: string
+  /** 帮助列表 */
+  helpList: Array<{
+    name: string
+    content: string
+  }>
 }
 
 /**
  * @description 判断运行环境
  */
-function isProd() {
+function isProd () {
   return process.env.NODE_ENV === "production"
 }
 
