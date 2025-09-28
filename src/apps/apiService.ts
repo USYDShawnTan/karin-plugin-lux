@@ -1,5 +1,6 @@
 import { karin } from 'node-karin'
 import { getTodayFortune, getHitokoto, getRandomLongImage, getSingleEmojiData, getComboEmojiData } from '../utils/api'
+import { checkInDaily, formatBalance } from '../utils/money'
 import emojiRegex from 'emoji-regex'
 
 /**
@@ -26,6 +27,20 @@ export const fortune = karin.command(/^#*(今日运势|打卡|jrys)$/, async (e)
     } else {
       // 兼容旧格式或未知格式
       message += JSON.stringify(data, null, 2)
+    }
+
+    try {
+      const userId = e.userId ?? e.sender?.userId
+      if (userId) {
+        const result = await checkInDaily(String(userId))
+        if (result.already) {
+          message += `\n\n💰 今日已打卡，当前余额：${formatBalance(result.balance)}`
+        } else {
+          message += `\n\n💰 打卡成功！获得 ${result.reward} 金币，当前余额：${formatBalance(result.balance)}`
+        }
+      }
+    } catch (err) {
+      console.error('打卡奖励失败:', err)
     }
 
     await e.reply(message)
@@ -132,4 +147,3 @@ export const emojiHandler = karin.command(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1
     return false
   }
 }, { name: 'emoji处理' })
-
