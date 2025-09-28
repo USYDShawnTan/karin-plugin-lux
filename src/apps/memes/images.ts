@@ -3,7 +3,7 @@ import { config } from '@/utils/config'
 import type { MemeInfo } from '@/utils/memes-api'
 
 /**
- * 按模板配置的优先级收集图片资源（消息 -> 回复 -> @头像 -> 自己头像）
+ * 按模板配置的优先级收集图片资源（消息 -> 回复 -> @头像 -> 自己头像）)
  */
 export async function collectImages (e: Message, info: MemeInfo): Promise<string[]> {
   const { min_images: minImages, max_images: maxImages } = info.params_type
