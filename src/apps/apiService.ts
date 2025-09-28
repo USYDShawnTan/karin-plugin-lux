@@ -1,57 +1,6 @@
 import { karin } from 'node-karin'
-import { getTodayFortune, getHitokoto, getRandomLongImage, getSingleEmojiData, getComboEmojiData } from '../utils/api'
-import { checkInDaily, formatBalance } from '../utils/money'
+import { getHitokoto, getRandomLongImage, getSingleEmojiData, getComboEmojiData } from '../utils/api'
 import emojiRegex from 'emoji-regex'
-
-/**
- * 获取今日运势
- */
-export const fortune = karin.command(/^#*(今日运势|打卡|jrys)$/, async (e) => {
-  try {
-    await e.reply('正在获取今日运势...')
-
-    const data = await getTodayFortune()
-
-    // 格式化今日运势响应数据
-    let message = '🔮 今日运势\n\n'
-    if (typeof data === 'string') {
-      message += data
-    } else if (data.fortuneSummary) {
-      // 使用新的API响应结构
-      message += `🎯 运势: ${data.fortuneSummary}\n`
-      message += `✨ 幸运指数: ${data.luckyStar}\n\n`
-      message += `📜 签文: ${data.signText}\n\n`
-      if (data.unsignText) {
-        message += `💡 解签: ${data.unsignText}`
-      }
-    } else {
-      // 兼容旧格式或未知格式
-      message += JSON.stringify(data, null, 2)
-    }
-
-    try {
-      const userId = e.userId ?? e.sender?.userId
-      if (userId) {
-        const result = await checkInDaily(String(userId))
-        if (result.already) {
-          message += `\n\n💰 今日已打卡，当前余额：${formatBalance(result.balance)}`
-        } else {
-          message += `\n\n💰 打卡成功！获得 ${result.reward} 金币，当前余额：${formatBalance(result.balance)}`
-        }
-      }
-    } catch (err) {
-      console.error('打卡奖励失败:', err)
-    }
-
-    await e.reply(message)
-    return true
-
-  } catch (error) {
-    console.error('获取今日运势失败:', error)
-    await e.reply('❌ 获取今日运势失败，请稍后再试')
-    return false
-  }
-}, { name: '今日运势' })
 
 /**
  * 获取随机一言
