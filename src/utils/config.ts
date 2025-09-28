@@ -23,6 +23,10 @@ export interface Config {
   }>
   /** 主人ID */
   masterId: string
+  /** meme表情包 */
+  memeBasePath: string
+  /** 启用主人反撅功能 */
+  enableMastercannotbefucked: boolean
 }
 
 /**

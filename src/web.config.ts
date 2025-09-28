@@ -46,6 +46,20 @@ export default defineConfig({
       defaultValue: config().emojiApiBaseUrl,
       isRequired: true
     }),
+    components.input.string("memeBasePath", {
+      label: "meme表情包路径",
+      placeholder: "请输入 meme 表情包路径",
+      defaultValue: config().memeBasePath,
+      isRequired: true
+    }),
+    components.divider.create('divider-key', {
+      description: "meme配置"
+    }),
+
+    components.switch.create("enableMastercannotbefucked", {
+      label: "启用主人反撅功能",
+      defaultSelected: config().enableMastercannotbefucked
+    })
   ],
 
   save: (cfg: any) => {

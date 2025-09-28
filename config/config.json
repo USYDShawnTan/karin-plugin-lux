@@ -3,6 +3,8 @@
   "apiBaseUrl": "",
   "emojiApiBaseUrl": "",
   "masterId": "",
+  "memeBasePath": "https://mobiustaylor-meme.hf.space/memes/",
+  "enableMastercannotbefucked": true,
   "helpList": [
     {
       "name": "今日运势",

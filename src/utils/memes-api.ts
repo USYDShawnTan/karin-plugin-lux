@@ -1,20 +1,62 @@
 import axios from 'node-karin/axios'
+import { config } from './config'
 
-const DEFAULT_BASE = 'https://mobiustaylor-meme.hf.space/memes/'
+const DEFAULT_BASE = config().memeBasePath 
+
+export interface MemeArgsOptionAction {
+  type: number
+  value?: any
+}
+
+export interface MemeArgsOptionArg {
+  name: string
+  value: string
+  default: any
+  flags: any
+}
+
+export interface MemeParserOption {
+  names: string[]
+  args: MemeArgsOptionArg[] | null
+  dest?: string | null
+  default?: any
+  action?: MemeArgsOptionAction | null
+  help_text?: string | null
+  compact?: boolean
+}
+
+export interface MemeArgsModelProperty {
+  default?: any
+  enum?: any[]
+  type?: string
+  description?: string
+  title?: string
+}
+
+export interface MemeArgsModel {
+  properties?: Record<string, MemeArgsModelProperty>
+}
+
+export interface MemeArgsType {
+  parser_options?: MemeParserOption[]
+  args_model?: MemeArgsModel
+  args_examples?: Record<string, any>[]
+}
+
+export interface MemeParamsType {
+  min_images: number
+  max_images: number
+  min_texts: number
+  max_texts: number
+  default_texts?: string[]
+  args_type?: MemeArgsType | null
+}
 
 export interface MemeInfo {
   key: string
   keywords: string[]
   date_created?: string
-  params_type: {
-    min_images: number
-    max_images: number
-    min_texts: number
-    max_texts: number
-    args_type?: {
-      parser_options: Array<{ names: string[]; help_text?: string }>
-    }
-  }
+  params_type: MemeParamsType
 }
 
 export interface RenderListItem {
