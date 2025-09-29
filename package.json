@@ -55,6 +55,7 @@
     "/lib/**/*.js",
     "/lib/**/*.d.ts",
     "/config/*.json",
+    "data",
     "resources",
     "!lib/app.js"
   ],
