@@ -1,0 +1,100 @@
+[
+  {
+    "symbol": "001",
+    "name": "深圳不怕影子斜但能力有限公司",
+    "basePrice": 120,
+    "volatility": 0.045,
+    "bias": 0.01
+  },
+  {
+    "symbol": "002",
+    "name": "广州加薪无望但秃头速度全球有陷有限公司",
+    "basePrice": 85,
+    "volatility": 0.06,
+    "bias": 0.015
+  },
+  {
+    "symbol": "003",
+    "name": "东莞甲方反悔我抗压力不支有限公司",
+    "basePrice": 95,
+    "volatility": 0.055,
+    "bias": 0.008
+  },
+  {
+    "symbol": "004",
+    "name": "佛山打工魂燃尽且发俸微弱有限公司",
+    "basePrice": 60,
+    "volatility": 0.07
+  },
+  {
+    "symbol": "005",
+    "name": "珠海画饼管饱但消化不良有限公司",
+    "basePrice": 140,
+    "volatility": 0.05,
+    "bias": 0.012
+  },
+  {
+    "symbol": "006",
+    "name": "中山预算砍半需求翻倍也硬撑有限公司",
+    "basePrice": 45,
+    "volatility": 0.04
+  },
+  {
+    "symbol": "007",
+    "name": "江门老板说下次一定加薪听之力疲有限公司",
+    "basePrice": 30,
+    "volatility": 0.09
+  },
+  {
+    "symbol": "008",
+    "name": "广州深夜改稿第八版甲方审美力崩坏有限公司",
+    "basePrice": 55,
+    "volatility": 0.035
+  },
+  {
+    "symbol": "009",
+    "name": "茂名早八打卡全勤奖励迟到专业有限公司",
+    "basePrice": 70,
+    "volatility": 0.05,
+    "bias": 0.01
+  },
+  {
+    "symbol": "010",
+    "name": "揭阳老板梦上市我写PPT造火箭有限公司",
+    "basePrice": 110,
+    "volatility": 0.065
+  },
+  {
+    "symbol": "011",
+    "name": "阳江预算两千效果两万魔术财务有限公司",
+    "basePrice": 90,
+    "volatility": 0.04,
+    "bias": 0.006
+  },
+  {
+    "symbol": "012",
+    "name": "肇庆年会抽奖重在参与运气值见底有限公司",
+    "basePrice": 75,
+    "volatility": 0.08
+  },
+  {
+    "symbol": "013",
+    "name": "汕头代码能跑一律不修自信力短缺有限公司",
+    "basePrice": 50,
+    "volatility": 0.05,
+    "bias": 0.004
+  },
+  {
+    "symbol": "014",
+    "name": "环世界过路肺有限公司",
+    "basePrice": 65,
+    "volatility": 0.06
+  },
+  {
+    "symbol": "015",
+    "name": "MC黄金工具批发制造有限公司",
+    "basePrice": 40,
+    "volatility": 0.07,
+    "bias": 0.009
+  }
+]
