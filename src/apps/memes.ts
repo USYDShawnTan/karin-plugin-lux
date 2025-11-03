@@ -98,7 +98,13 @@ const memes = async (e: Message) => {
   let msg = e.msg
 
   const keywordMap = getKeywordMap()
-  const target = Object.keys(keywordMap).find(k => msg.startsWith(k))
+  let target: string | undefined
+  for (const key of Object.keys(keywordMap)) {
+    if (!msg.startsWith(key)) continue
+    if (!target || key.length > target.length) {
+      target = key
+    }
+  }
   if (!target) return false
 
   const targetCode = keywordMap[target]
@@ -156,9 +162,6 @@ const memes = async (e: Message) => {
         return true
       }
       textResult.texts.forEach(t => formData.append('texts', t))
-    } else if (text) {
-      await e.reply('该表情不支持文本内容')
-      return true
     }
 
     const argsResult = await buildArgsPayload(targetCode, info, args, e)
@@ -203,7 +206,8 @@ function registerDynamicCommands () {
   commandAll.length = 0
 
   const keywordMap = getKeywordMap()
-  Object.keys(keywordMap).forEach(keyword => {
+  const keywords = Object.keys(keywordMap).sort((a, b) => b.length - a.length)
+  keywords.forEach(keyword => {
     const escapedKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
     const command = karin.command(new RegExp(`^${escapedKeyword}`), (e) => memes(e), {
       name: `meme-${keyword}`,
