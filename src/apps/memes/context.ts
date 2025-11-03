@@ -30,11 +30,15 @@ export async function initContext (forceRemote = false): Promise<void> {
     const newInfos: Record<string, MemeInfo> = {}
     const newKeyMap: Record<string, string> = {}
 
-    for (const key of keys) {
+    const infosList = await Promise.all(keys.map(async (key) => {
       const info = await api.getInfo(key)
-      newInfos[key] = info
+      return info
+    }))
+
+    for (const info of infosList) {
+      newInfos[info.key] = info
       for (const keyword of info.keywords) {
-        newKeyMap[keyword] = key
+        newKeyMap[keyword] = info.key
       }
     }
 
