@@ -8,6 +8,7 @@ import { buildArgsPayload } from './memes/args'
 import { sendMemesHelp } from './memes/help'
 import { runMemesUpdate } from './memes/update'
 import { handleRandomMemes } from './memes/random'
+import { getConfig } from '@/config'
 import {
   initContext,
   getKeywordMap,
@@ -24,6 +25,8 @@ const commandAll: ReturnType<typeof karin.command>[] = []
 
 /** 表情包列表 */
 export const memesList = karin.command(/^#?(meme(s)?|表情包)列表$/, async (e) => {
+  if (!getConfig().features.meme.enabled) return false
+
   const buf = store.readListImage()
   if (buf) {
     const base64 = buf.toString('base64')
@@ -52,15 +55,17 @@ export const memesList = karin.command(/^#?(meme(s)?|表情包)列表$/, async (
 /** 随机meme */
 export const randomMemes = karin.command(
   /^#?随机(meme(s)?|表情包|mm)$/,
-  (e) => handleRandomMemes(e, memes),
+  (e) => getConfig().features.meme.enabled ? handleRandomMemes(e, memes) : false,
   { name: '随机表情包' }
 )
 
 /** meme帮助 */
-export const memesHelp = karin.command(/^#?(meme(s)?|表情包)帮助$/, (e) => sendMemesHelp(e), { name: '表情包帮助' })
+export const memesHelp = karin.command(/^#?(meme(s)?|表情包)帮助$/, (e) => getConfig().features.meme.enabled ? sendMemesHelp(e) : false, { name: '表情包帮助' })
 
 /** meme搜索 */
 export const memesSearch = karin.command(/^#?(meme(s)?|表情包)搜索/, async (e) => {
+  if (!getConfig().features.meme.enabled) return false
+
   const search = e.msg.replace(/^#?(meme(s)?|表情包)搜索/, '').trim()
   if (!search) {
     await e.reply('你要搜什么？')
@@ -85,7 +90,7 @@ export const memesSearch = karin.command(/^#?(meme(s)?|表情包)搜索/, async 
 /** meme更新 */
 export const memesUpdate = karin.command(
   /^#?(meme(s)?|表情包)更新$/,
-  (e) => runMemesUpdate(e, commandAll, initAll, resetContext),
+  (e) => getConfig().features.meme.enabled ? runMemesUpdate(e, commandAll, initAll, resetContext) : false,
   { name: '表情包更新', permission: 'admin' }
 )
 
@@ -93,6 +98,8 @@ export const memesUpdate = karin.command(
  * 表情包核心处理函数
  */
 const memes = async (e: Message) => {
+  if (!getConfig().features.meme.enabled) return false
+
   await initContext()
 
   let msg = e.msg

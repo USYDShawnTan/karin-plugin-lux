@@ -1,0 +1,12 @@
+{
+  "poke": {
+    "enabled": true,
+    "protectMaster": true
+  },
+  "meme": {
+    "enabled": true
+  },
+  "emoji": {
+    "enabled": true
+  }
+}

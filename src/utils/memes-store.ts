@@ -15,7 +15,7 @@ export class MemesStore {
   readonly listImagePath: string
 
   constructor () {
-    this.baseDir = dir.memesDataDir
+    this.baseDir = dir.memesData
     this.infosPath = path.join(this.baseDir, 'infos.json')
     this.keyMapPath = path.join(this.baseDir, 'keyMap.json')
     this.triggersPath = path.join(this.baseDir, 'triggers.json')
@@ -85,5 +85,4 @@ export class MemesStore {
     return fs.readFileSync(this.listImagePath)
   }
 }
-
 

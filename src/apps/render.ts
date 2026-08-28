@@ -8,10 +8,8 @@ import path from 'node:path'
  */
 export const image = karin.command(/^#?测试渲染$/, async (e) => {
   try {
-    // const html = dir.defResourcesDir + '/template/test.html'
-    // const image = dir.defResourcesDir + '/image/启程宣发.png'
-    const html = path.join(dir.resourcesDir, "template/test.html")
-    const image = path.join(dir.resourcesDir, "image/启程宣发.png")
+    const html = path.join(dir.resources, "template/test.html")
+    const image = path.join(dir.resources, "image/启程宣发.png")
     // const html = process.cwd() + '/resources/template/test.html'
     // const image = process.cwd() + '/resources/image/启程宣发.png'
 
@@ -105,4 +103,3 @@ export const screenshot = karin.command('^#测试截图$', async (e) => {
 }, {
   name: '测试截图',
 })
-

@@ -1,5 +1,5 @@
 import type { Message, AtElement } from 'node-karin'
-import { config } from '@/utils/config'
+import { getConfig } from '@/config'
 import type { MemeInfo } from '@/utils/memes-api'
 
 /**
@@ -23,8 +23,9 @@ export async function collectImages (e: Message, info: MemeInfo): Promise<string
     imgUrls.unshift(url)
   }
 
-  const { masterId, enableMastercannotbefucked } = config()
-  const protectMaster = Boolean(enableMastercannotbefucked) && info.key === 'do' && Boolean(masterId)
+  const { general, features } = getConfig()
+  const masterId = general.masterId
+  const protectMaster = features.poke.protectMaster && info.key === 'do' && Boolean(masterId)
   let senderAvatar: string | undefined
   let masterAvatar: string | undefined
   let masterAt = false

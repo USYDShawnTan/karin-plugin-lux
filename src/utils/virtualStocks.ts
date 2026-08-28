@@ -13,7 +13,7 @@ const PORTFOLIO_KEY = 'karin:virtualstocks:portfolio'
 const MIN_UPDATE_INTERVAL_MS = 60_000
 const MAX_INTERVALS_PER_UPDATE = 5
 
-// 股票基础信息配置文件名（位于 data/virtual-stocks.json）
+// 股票基础信息配置文件名（位于运行时 config/virtual-stocks.json）
 const STOCK_DATA_FILE = 'virtual-stocks.json'
 
 interface RedisClientLike {
@@ -84,17 +84,12 @@ function normalizeSymbol (input: string): string {
   return input.trim().toUpperCase()
 }
 
-// 从数据文件中读取股票列表，若读取失败直接抛错提醒维护者补充配置。
+// 从运行时配置文件中读取股票列表，若读取失败直接抛错提醒维护者补充配置。
 function getStockDefinitions (): VirtualStockDefinition[] {
   if (cachedStocks) return cachedStocks
 
-  const candidates = [
-    path.join(dir.dataDir, STOCK_DATA_FILE),
-    path.join(dir.pluginDir, 'data', STOCK_DATA_FILE)
-  ]
-
-  for (const filePath of candidates) {
-    if (!existsSync(filePath)) continue
+  const filePath = path.join(dir.runtimeConfig, STOCK_DATA_FILE)
+  if (existsSync(filePath)) {
     try {
       const raw = readFileSync(filePath, 'utf-8')
       const parsed = JSON.parse(raw)
@@ -129,7 +124,7 @@ function getStockDefinitions (): VirtualStockDefinition[] {
     }
   }
 
-  throw new Error(`[virtualStocks] 未找到股票配置文件，请在 data/${STOCK_DATA_FILE} 中提供配置`)
+  throw new Error(`[virtualStocks] 未找到股票配置文件: ${filePath}`)
 }
 
 function getStockDefinition (symbol: string): VirtualStockDefinition {

@@ -1,7 +1,5 @@
 import axios from 'node-karin/axios'
-import { config } from './config'
-
-const DEFAULT_BASE = config().memeBasePath 
+import { getConfig } from '@/config'
 
 export interface MemeArgsOptionAction {
   type: number
@@ -66,10 +64,15 @@ export interface RenderListItem {
 }
 
 export class MemesApi {
-  private readonly baseUrl: string
+  private readonly configuredBaseUrl?: string
 
-  constructor (baseUrl: string = DEFAULT_BASE) {
-    this.baseUrl = baseUrl.endsWith('/') ? baseUrl : baseUrl + '/'
+  constructor (baseUrl?: string) {
+    this.configuredBaseUrl = baseUrl
+  }
+
+  private get baseUrl (): string {
+    const url = this.configuredBaseUrl ?? getConfig().services.memeBaseUrl
+    return url.endsWith('/') ? url : `${url}/`
   }
 
   async getKeys (): Promise<string[]> {
@@ -100,5 +103,4 @@ export class MemesApi {
     return data as ArrayBuffer
   }
 }
-
 

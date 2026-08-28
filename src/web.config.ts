@@ -1,7 +1,18 @@
 import { defineConfig, components } from "node-karin"
-import { saveConfig } from "@/utils/config"
-import { config } from "@/utils/config"
+import { getConfig, saveFeaturesConfig, saveGeneralConfig, saveServicesConfig } from "@/config"
 
+interface WebConfigValues {
+  masterId: string
+  apiBaseUrl: string
+  dynamicEmojiBaseUrl: string
+  emojiComboBaseUrl: string
+  memeBaseUrl: string
+  hitokotoUrl: string
+  pokeEnabled: boolean
+  protectMaster: boolean
+  memeEnabled: boolean
+  emojiEnabled: boolean
+}
 
 export default defineConfig({
   info: {
@@ -16,54 +27,83 @@ export default defineConfig({
   },
 
   components: () => [
-    components.divider.create('divider-key', {
-      description: "戳一戳配置"
+    components.divider.create('general-divider', {
+      description: "基本设置"
     }),
     components.input.string("masterId", {
       label: "主人ID",
       placeholder: "请输入主人ID",
-      defaultValue: config().masterId,
+      defaultValue: getConfig().general.masterId,
       isRequired: true
     }),
-    components.divider.create('divider-key', {
-      description: "API 配置"
-    }),
-    components.input.string("yiyanApi", {
-      label: "一言 API 地址",
-      placeholder: "请输入 URL",
-      defaultValue: config().yiyanApi,
-      isRequired: true
+    components.divider.create('services-divider', {
+      description: "服务设置"
     }),
     components.input.string("apiBaseUrl", {
-      label: "通用 API 基础地址",
-      placeholder: "请输入 API 基础地址",
-      defaultValue: config().apiBaseUrl,
+      label: "通用 API 根地址（今日运势）",
+      placeholder: "例如：https://api.433200.xyz/api",
+      defaultValue: getConfig().services.apiBaseUrl,
       isRequired: true
     }),
-    components.input.string("emojiApiBaseUrl", {
-      label: "Emoji API 基础地址",
-      placeholder: "请输入 Emoji API 基础地址",
-      defaultValue: config().emojiApiBaseUrl,
+    components.input.string("dynamicEmojiBaseUrl", {
+      label: "动态 Emoji API 地址",
+      placeholder: "请输入动态 Emoji API 地址",
+      defaultValue: getConfig().services.dynamicEmojiBaseUrl,
       isRequired: true
     }),
-    components.input.string("memeBasePath", {
-      label: "meme表情包路径",
-      placeholder: "请输入 meme 表情包路径",
-      defaultValue: config().memeBasePath,
+    components.input.string("emojiComboBaseUrl", {
+      label: "Emoji 合成 API 地址",
+      placeholder: "请输入 Emoji 合成 API 地址",
+      defaultValue: getConfig().services.emojiComboBaseUrl,
       isRequired: true
     }),
-    components.divider.create('divider-key', {
-      description: "meme配置"
+    components.input.string("memeBaseUrl", {
+      label: "Meme API 地址",
+      placeholder: "请输入 Meme API 地址",
+      defaultValue: getConfig().services.memeBaseUrl,
+      isRequired: true
     }),
-
-    components.switch.create("enableMastercannotbefucked", {
-      label: "启用主人反撅功能",
-      defaultSelected: config().enableMastercannotbefucked
+    components.input.string("hitokotoUrl", {
+      label: "Hitokoto / 一言 API 地址",
+      placeholder: "请输入 Hitokoto API 地址",
+      defaultValue: getConfig().services.hitokotoUrl,
+      isRequired: true
+    }),
+    components.divider.create('features-divider', {
+      description: "功能设置"
+    }),
+    components.switch.create("pokeEnabled", {
+      label: "启用戳一戳",
+      defaultSelected: getConfig().features.poke.enabled
+    }),
+    components.switch.create("protectMaster", {
+      label: "启用主人保护",
+      defaultSelected: getConfig().features.poke.protectMaster
+    }),
+    components.switch.create("memeEnabled", {
+      label: "启用 Meme",
+      defaultSelected: getConfig().features.meme.enabled
+    }),
+    components.switch.create("emojiEnabled", {
+      label: "启用 Emoji",
+      defaultSelected: getConfig().features.emoji.enabled
     })
   ],
 
-  save: (cfg: any) => {
-    saveConfig(cfg)
+  save: (cfg: WebConfigValues) => {
+    saveGeneralConfig({ masterId: cfg.masterId })
+    saveServicesConfig({
+      apiBaseUrl: cfg.apiBaseUrl,
+      dynamicEmojiBaseUrl: cfg.dynamicEmojiBaseUrl,
+      emojiComboBaseUrl: cfg.emojiComboBaseUrl,
+      memeBaseUrl: cfg.memeBaseUrl,
+      hitokotoUrl: cfg.hitokotoUrl
+    })
+    saveFeaturesConfig({
+      poke: { enabled: cfg.pokeEnabled, protectMaster: cfg.protectMaster },
+      meme: { enabled: cfg.memeEnabled },
+      emoji: { enabled: cfg.emojiEnabled }
+    })
     return { success: true, message: "配置保存成功" }
   }
 })

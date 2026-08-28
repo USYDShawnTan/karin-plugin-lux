@@ -1,6 +1,10 @@
-import { karin } from 'node-karin'
-import { getHitokoto, getRandomLongImage, getSingleEmojiData, getComboEmojiData } from '../utils/api'
+import { karin, segment } from 'node-karin'
+import { getHitokoto, getSingleEmojiData, getComboEmojiData } from '../utils/api'
 import emojiRegex from 'emoji-regex'
+import { getConfig } from '@/config'
+import { getRandomLongImageBuffer, initializeLongImages } from '@/utils/long-images'
+
+await initializeLongImages()
 
 /**
  * 获取随机一言
@@ -40,18 +44,8 @@ export const randomImage = karin.command(/^#*(龙|long)$/, async (e) => {
   try {
     await e.reply('nmsl...')
 
-    const data = await getRandomLongImage()
-
-    // 处理图片响应
-    const imageUrl = data.image_url
-
-    if (imageUrl) {
-      await e.reply([
-        { type: 'image', file: imageUrl }
-      ])
-    } else {
-      await e.reply('❌ 获取图片失败，请稍后再试')
-    }
+    const buffer = await getRandomLongImageBuffer()
+    await e.reply(segment.image(`base64://${buffer.toString('base64')}`))
     return true
 
   } catch (error) {
@@ -65,6 +59,8 @@ export const randomImage = karin.command(/^#*(龙|long)$/, async (e) => {
  * Emoji处理 - 检测消息中的emoji并自动发图
  */
 export const emojiHandler = karin.command(/[\u{1F600}-\u{1F64F}]|[\u{1F300}-\u{1F5FF}]|[\u{1F680}-\u{1F6FF}]|[\u{1F1E0}-\u{1F1FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/u, async (e) => {
+  if (!getConfig().features.emoji.enabled) return false
+
   try {
     const emojis = e.msg.match(emojiRegex())
 

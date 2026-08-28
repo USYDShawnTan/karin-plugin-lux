@@ -1,10 +1,10 @@
-import { config } from '@/utils'
+import { getConfig } from '@/config'
 import { karin, segment, common } from 'node-karin'
 
 /** 一言api */
 export const yiyanApi = karin.command(/^#一言$/, async (e) => {
-  const { yiyanApi } = config()
-  await e.reply(segment.image(yiyanApi))
+  const { hitokotoUrl } = getConfig().services
+  await e.reply(segment.image(hitokotoUrl))
 }, {
   name: '一言api',
 })

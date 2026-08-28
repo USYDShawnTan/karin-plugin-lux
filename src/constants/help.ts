@@ -1,0 +1,13 @@
+export interface HelpItem {
+  name: string
+  content: string
+}
+
+export const helpItems: HelpItem[] = [
+  { name: '今日运势', content: '获取今日运势信息，包含运势总结、幸运指数、签文和解签' },
+  { name: '随机一言', content: '获取随机励志语句，包含出处和作者信息' },
+  { name: '随机图片', content: '获取随机图片，触发命令：#龙 或 #long' },
+  { name: 'emoji处理', content: '发送emoji自动生成图片，支持单个emoji和两个emoji合成' },
+  { name: 'meme表情包', content: 'meme表情包功能，#meme帮助可以查看' },
+  { name: '帮助页面', content: '显示插件功能列表，触发命令：#帮助 或 #help' }
+]

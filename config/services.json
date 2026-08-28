@@ -1,0 +1,7 @@
+{
+  "apiBaseUrl": "https://api.433200.xyz/api",
+  "dynamicEmojiBaseUrl": "https://api.433200.xyz/api/dynamic-emoji",
+  "emojiComboBaseUrl": "https://api.433200.xyz/api/emoji",
+  "memeBaseUrl": "https://mobiustaylor-meme.hf.space/memes/",
+  "hitokotoUrl": "https://v1.hitokoto.cn/"
+}

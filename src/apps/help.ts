@@ -1,6 +1,6 @@
 import { dir } from '@/dir'
 import { karin, render, segment, logger } from 'node-karin'
-import { config } from '@/utils/config'
+import { helpItems } from '@/constants/help'
 import path from 'node:path'
 
 /**
@@ -9,22 +9,20 @@ import path from 'node:path'
  */
 export const help = karin.command(/^#?(帮助|help|功能列表|功能|插件列表)$/, async (e) => {
   try {
-    // 获取配置中的功能列表
-    const cfg = config()
-    const helpList = cfg.helpList || []
+    const items = helpItems
 
-    if (helpList.length === 0) {
-      await e.reply('❌ 功能列表为空，请检查配置文件')
+    if (items.length === 0) {
+      await e.reply('❌ 功能列表为空')
       return false
     }
 
     // HTML模板路径
-    const htmlTemplate = path.join(dir.resourcesDir, "template/help.html")
+    const htmlTemplate = path.join(dir.resources, "template/help.html")
     // 背景图片路径
-    const backgroundImage = path.join(dir.resourcesDir, "image/lux.webp")
+    const backgroundImage = path.join(dir.resources, "image/lux.webp")
 
     // 生成功能列表HTML
-    const helpListHTML = helpList.map((item, index) => `
+    const helpItemsHTML = items.map((item, index) => `
       <div class="help-item">
         <div class="help-header">
           <div class="help-number">${index + 1}</div>
@@ -44,7 +42,7 @@ export const help = karin.command(/^#?(帮助|help|功能列表|功能|插件列
         pluginName: 'karin-plugin-lux',
         pluginInfo: '杂七杂八的小功能合集',
         pluResPath: process.cwd(),
-        helpListHTML: helpListHTML, // 传递预生成的HTML
+        helpItemsHTML,
       },
       pageGotoParams: {
         waitUntil: 'networkidle2',

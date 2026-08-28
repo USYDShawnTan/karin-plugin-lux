@@ -1,5 +1,5 @@
 import karin from 'node-karin'
-import { config } from '@/utils/config'
+import { getConfig } from '@/config'
 
 /** 戳一戳事件的实际数据结构 */
 interface ActualPokeEvent {
@@ -33,17 +33,19 @@ const masterReplyList = [
  * 当机器人被戳时回复
  */
 export const pokeEvent = karin.accept('notice.groupPoke', async (ctx) => {
+  const { general, features } = getConfig()
+  if (!features.poke.enabled) return false
+
   const pokeData = ctx.rawEvent as ActualPokeEvent
 
   if (String(pokeData.target_id) === String(ctx.selfId)) {
     await ctx.reply(replyList[Math.floor(Math.random() * replyList.length)])
     return true
   }
-  if (String(pokeData.target_id) === String(config().masterId)) {
+  if (String(pokeData.target_id) === String(general.masterId)) {
     await ctx.reply(masterReplyList[Math.floor(Math.random() * masterReplyList.length)])
     return true
   }
 
   return false
 })
-
