@@ -61,10 +61,11 @@ async function cloneImages (): Promise<void> {
   fs.mkdirSync(dir.runtimeData, { recursive: true })
   logger.info(`[karin-plugin-lux] 本地坤图不存在，开始克隆到: ${ikunImagesDir}`)
 
-  const username = process.env.LUX_IKUN_GIT_USERNAME
-  const token = process.env.LUX_IKUN_GIT_TOKEN
+  // 与龙图共用同一套 AcWing GitLab 认证
+  const username = process.env.LUX_LONG_GIT_USERNAME
+  const token = process.env.LUX_LONG_GIT_TOKEN
   if (Boolean(username) !== Boolean(token)) {
-    throw new Error('坤图仓库认证配置不完整，请同时设置 LUX_IKUN_GIT_USERNAME 和 LUX_IKUN_GIT_TOKEN')
+    throw new Error('坤图仓库认证配置不完整，请同时设置 LUX_LONG_GIT_USERNAME 和 LUX_LONG_GIT_TOKEN')
   }
 
   const askPassPath = path.join(dir.runtimeData, '.ikun-git-askpass.sh')
@@ -80,8 +81,8 @@ async function cloneImages (): Promise<void> {
       const askPassScript = [
         '#!/bin/sh',
         'case "$1" in',
-        '  *Username*) printf \'%s\\n\' "$LUX_IKUN_GIT_USERNAME" ;;',
-        '  *) printf \'%s\\n\' "$LUX_IKUN_GIT_TOKEN" ;;',
+        '  *Username*) printf \'%s\\n\' "$LUX_LONG_GIT_USERNAME" ;;',
+        '  *) printf \'%s\\n\' "$LUX_LONG_GIT_TOKEN" ;;',
         'esac',
         ''
       ].join('\n')
@@ -89,8 +90,8 @@ async function cloneImages (): Promise<void> {
       Object.assign(env, {
         GIT_ASKPASS: askPassPath,
         GIT_ASKPASS_REQUIRE: 'force',
-        LUX_IKUN_GIT_USERNAME: username,
-        LUX_IKUN_GIT_TOKEN: token
+        LUX_LONG_GIT_USERNAME: username,
+        LUX_LONG_GIT_TOKEN: token
       })
     }
 
@@ -105,7 +106,7 @@ async function cloneImages (): Promise<void> {
       fs.rmSync(ikunImagesDir, { recursive: true, force: true })
     }
     if (!username || !token) {
-      throw new Error('坤图仓库需要登录。请设置 LUX_IKUN_GIT_USERNAME 和具有 read_repository 权限的 LUX_IKUN_GIT_TOKEN', { cause: error })
+      throw new Error('坤图仓库需要登录。请设置 LUX_LONG_GIT_USERNAME 和具有 read_repository 权限的 LUX_LONG_GIT_TOKEN', { cause: error })
     }
     throw error
   } finally {
