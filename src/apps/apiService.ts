@@ -3,6 +3,7 @@ import { getHitokoto, getSingleEmojiData, getComboEmojiData } from '../utils/api
 import emojiRegex from 'emoji-regex'
 import { getConfig } from '@/config'
 import { getRandomLongImageBuffer, initializeLongImages } from '@/utils/long-images'
+import { getRandomIkunImageBuffer } from '@/utils/ikun-images'
 
 await initializeLongImages()
 
@@ -54,6 +55,21 @@ export const randomImage = karin.command(/^#*(龙|long)$/, async (e) => {
     return false
   }
 }, { name: '随机图片' })
+
+/**
+ * 超宽松坤图触发：消息里只要包含梗关键词就发一张随机坤图
+ */
+export const randomIkunImage = karin.command(/坤|鸡|干嘛|哎哟|哎呦|小黑子|ckx|cxk|ikun|只因|蔡徐坤|鸡你太美|唱跳|rap|篮球|练习生|两年半|鸡脚|露出鸡脚|你干嘛|哈哈哎哟/iu, async (e) => {
+  try {
+    const buffer = await getRandomIkunImageBuffer()
+    await e.reply(segment.image(`base64://${buffer.toString('base64')}`))
+    return true
+  } catch (error) {
+    console.error('获取随机坤图失败:', error)
+    await e.reply('❌ 获取随机坤图失败，请稍后再试')
+    return false
+  }
+}, { name: '随机坤图' })
 
 /**
  * Emoji处理 - 检测消息中的emoji并自动发图
