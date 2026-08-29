@@ -3,9 +3,12 @@ import { getHitokoto, getSingleEmojiData, getComboEmojiData } from '../utils/api
 import emojiRegex from 'emoji-regex'
 import { getConfig } from '@/config'
 import { getRandomLongImageBuffer, initializeLongImages } from '@/utils/long-images'
-import { getRandomIkunImageBuffer } from '@/utils/ikun-images'
+import { getRandomIkunImageBuffer, initializeIkunImages } from '@/utils/ikun-images'
 
-await initializeLongImages()
+await Promise.all([
+  initializeLongImages(),
+  initializeIkunImages()
+])
 
 /**
  * 获取随机一言
